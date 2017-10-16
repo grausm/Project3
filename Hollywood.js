@@ -8,192 +8,140 @@
 "use strict";
 const PROMPT = require('readline-sync');
 
-//Section 1 -----------------------------------------^
-
 let continueResponse;
-let policyId, lastName, firstName, age;
-let premiumdDueDate, accidentsThreeYears;
-let totalPrice;
+let movieTitle;
+let movieRating, averageRating, movieTotal, numCounter, printAvgRating;
 
-const LANGUAGE = 'English';
-
-//Section 2 -----------------------------------------^
 
 /**
  * @method
- * @desc Dispatch method
+ * @desc dispatch method
  * @returns {null}
  */
-
 function main() {
-    process.stdout.write('\x1Bc');
-    if (continueResponse == null) {
+    process.stdout.write('\x1bc');
+    setContinueResponse();
+    while (continueResponse === 1) {
+        setMovieTitle();
+        setMovieRating();
+        setNumCounter();
+        setMovieTotal();
+        setAverageRating();
+        setPrintAvgRating();
         setContinueResponse();
-    }
-    if (continueResponse === 1) {
-        setpolicyId();
-        setfirstName();
-        setlastName();
-        setage();
-        setpremiumdDueDate();
-        setaccidentsThreeYears();
-        settotalPrice();
-        printResults();
-        setContinueResponse();
-        return main();
     }
     printGoodbye();
-
 }
 
 /**
  * @method
- * @desc Do you want to continue
+ * @desc Continue Response
  * @returns {null}
  */
 
 main();
 
 function setContinueResponse() {
-    if (continueResponse === 1) {
+    if (continueResponse === 1 || continueResponse === 0) {
         continueResponse = Number(PROMPT.question(`\nDo you want to continue? [0=no, 1=yes]: `));
-        if (continueResponse !== 0 && continueResponse !== 1) {
-            console.log(`${continueResponse} is a incorrect value. Please try again.`);
-            continueResponse = 1;
-            setContinueResponse();
+        while (continueResponse !== 0 && continueResponse !== 1) {
+            console.log(`${continueResponse} is an incorrect value. Please try again.`);
+            continueResponse = Number(PROMPT.question(`\nDo you want to continue? [0=no, 1=yes]: `));
         }
     } else {
         continueResponse = 1;
     }
 }
 
-//Section 3 ----------------------------------------^
+function setMovieTitle() {
+    movieTitle= PROMPT.question(`\tWhat movie would you like to rate?`);
 
-/**
- * @method
- * @desc Random policy id
- * @returns {null}
- */
-
-function setpolicyId() {
-    policyId = Math.floor((Math.random()* 5000) + 1);
 }
 
 /**
  * @method
- * @desc Enter last name
+ * @desc Movie Rating
  * @returns {null}
  */
-function setlastName() {
-    lastName = (PROMPT.question(`\nPlease enter last name: `));
-}
 
-/**
- * @method
- * @desc Enter first name
- * @returns {null}
- */
-function setfirstName() {
-    firstName = (PROMPT.question(`\nPlease enter first name: `));
-}
-
-/**
- * @method
- * @desc Enter age
- * @returns {null}
- */
-function setage() {
-    age = Number(PROMPT.question(`\nPlease enter age: `));
-}
-
-/**
- * @method
- * @desc Enter premium due date
- * @returns {null}
- */
-function setpremiumdDueDate() {
-    premiumdDueDate = Number(PROMPT.question(`\nPlease enter premium due date: `));
-}
-
-/**
- * @method
- * @desc Enter accidents
- * @returns {null}
- */
-function setaccidentsThreeYears() {
-    accidentsThreeYears = Number(PROMPT.question(`\nHow many at fault accidents in the last 3 years: `));
-}
-
-/**
- * @method
- * @desc Total price
- * @returns {null}
- */
-function settotalPrice() {
-    totalPrice = 0;
-    const BASE_PRICE = 100,
-        UNDER_30 = 30,
-        THIRTY_TO_45 = 45,
-        SIXTY_AND_OVER = 60,
-        UNDER_30_FEE = 20,
-        THIRTY_TO_45_FEE = 10,
-        SIXTY_AND_OVER_FEE = 30,
-        ACCIDENTS = 50;
-    if (age > 0) {
-        if (age > 15 && age < UNDER_30) {
-            totalPrice = UNDER_30_FEE + BASE_PRICE + (accidentsThreeYears * ACCIDENTS);
-        } else if (age >= UNDER_30 && age < THIRTY_TO_45) {
-            totalPrice = THIRTY_TO_45_FEE + BASE_PRICE + (accidentsThreeYears * ACCIDENTS);
-        } else if (age >= SIXTY_AND_OVER) {
-            totalPrice = SIXTY_AND_OVER_FEE + BASE_PRICE + (accidentsThreeYears * ACCIDENTS);
+function setMovieRating() {
+    const MAX_RATING = 5,
+        MIN_RATING = 0,
+        MAX_ATTEMPTS = 3;
+    let answered = false;
+    let counter = 0;
+    while (counter < MAX_ATTEMPTS && answered != true) {
+        movieRating = Number(PROMPT.question(`\nEnter how many stars 1-5: `));
+        if (movieRating < MIN_RATING || movieRating > MAX_RATING) {
+            counter++;
+        } else {
+            counter++;
+            answered = true;
         }
     }
-
-
 }
 
 /**
  * @method
- * @desc Output final price
+ * @desc Movie total
  * @returns {null}
  */
-function printResults() {
-    process.stdout.write('\x1Bc'); //Clears the screen
-    console.log(`\n\t${firstName}'s bill: \$${totalPrice}. Customer#: ${policyId}`);
+function setMovieTotal() {
+    if(movieTotal != null) {
+        movieTotal += movieRating
+    } else {
+        movieTotal = movieRating
+    }
+}
+
+
+/**
+ * @method
+ * @desc Num Counter
+ * @returns {null}
+ */
+
+function setNumCounter(){
+    if (numCounter != null) {
+        numCounter++;
+    } else {
+        numCounter = 1;
+    }
 }
 
 /**
  * @method
- * @desc Output goodbye
+ * @desc Average Rating
+ * @returns {null}
+ */
+
+function setAverageRating() {
+    averageRating = movieTotal / numCounter
+
+}
+
+/**
+ * @method
+ * @desc Prints Average Rating
+ * @returns {null}
+ */
+
+function  setPrintAvgRating() {
+    printAvgRating = console.log(`\nAverage rating is: ${averageRating}. `);
+}
+/**
+ * @method
+ * @desc Print goodbye utility method
  * @returns {null}
  */
 function printGoodbye() {
-    process.stdout.write('\x1bc');
-    console.log('\n\tGoodbye.');
-
+    console.log(`\tGoodbye.`);
 }
 
-//Section 4 -------------------------------------------^
 /*
-Design a program for the Hollywood Movie Rating Guide, in which users continuously enter a value from 0 to 5 that
-indicates the number of stars they are awarding to a movie title they are prompted for. The program executes
-continuously until a user decides to quit. If a user enters a star value that does not fall in the correct range,
-re-prompt the user three (3) times until a correct value is entered. At the end of the program, display the average
-star rating for the movie.
+ Design a program for the Hollywood Movie Rating Guide, in which users continuously enter a value from 0 to 5 that
+ indicates the number of stars they are awarding to a movie title they are prompted for. The program executes
+ continuously until a user decides to quit. If a user enters a star value that does not fall in the correct range,
+ re-prompt the user three (3) times until a correct value is entered. At the end of the program, display the average
+ star rating for the movie.
  */
-function processPaymentCoupons() {
-    while (starsNum <= MAX_STARS) {
-        while (currentClassroom <= MAX_CLASSROOM) {
-            while (monthNum <= MAX_MONTH) {
-                if (currentGrade === 0) {
-                    console.log(`\n\tThe tuition for month: ${setCurrentMonth()}, for classroom: ${currentClassroom}, of grade: ${currentGrade} is: \$${setUpperTuition()}.`);
-                }
-                setMonthNum();
-            }
-            setCurrentClassroom();
-            setMonthNum();
-        }
-        setCurrentGrade();
-        setCurrentClassroom();
-    }
-}
