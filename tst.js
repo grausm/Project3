@@ -97,9 +97,9 @@ function printGoodbye() {
 }
 
 /*
- The "Hurr Durr, Make 'em Smarter Everyday" private school has contracted you to write software that prints the monthly
- payment coupons for each month, grade, & classroom. The school is in session for 9 months (September - May), goes from
- kindergarten to  grade 8, & has 3 classrooms per grade-level. The monthly base cost for kindergarten is $80. All other
- grades are $60 monthly, multiplied by the current grade.
- Topics:  Loops (while, C-style for), nesting logic, typeof, validation++
+ Design a program for the Hollywood Movie Rating Guide, in which users continuously enter a value from 0 to 5 that
+ indicates the number of stars they are awarding to a movie title they are prompted for. The program executes
+ continuously until a user decides to quit. If a user enters a star value that does not fall in the correct range,
+ re-prompt the user three (3) times until a correct value is entered. At the end of the program, display the average
+ star rating for the movie.
  */
