@@ -12,12 +12,12 @@ let continueResponse;
 let movieTitle;
 let movieRating, averageRating, movieTotal, numCounter, printAvgRating;
 
-
 /**
  * @method
  * @desc dispatch method
  * @returns {null}
  */
+
 function main() {
     process.stdout.write('\x1bc');
     setContinueResponse();
@@ -55,7 +55,6 @@ function setContinueResponse() {
 
 function setMovieTitle() {
     movieTitle= PROMPT.question(`\tWhat movie would you like to rate?`);
-
 }
 
 /**
@@ -86,6 +85,7 @@ function setMovieRating() {
  * @desc Movie total
  * @returns {null}
  */
+
 function setMovieTotal() {
     if(movieTotal != null) {
         movieTotal += movieRating
@@ -93,7 +93,6 @@ function setMovieTotal() {
         movieTotal = movieRating
     }
 }
-
 
 /**
  * @method
@@ -117,7 +116,6 @@ function setNumCounter(){
 
 function setAverageRating() {
     averageRating = movieTotal / numCounter
-
 }
 
 /**
@@ -129,11 +127,13 @@ function setAverageRating() {
 function  setPrintAvgRating() {
     printAvgRating = console.log(`\nAverage rating is: ${averageRating}. `);
 }
+
 /**
  * @method
  * @desc Print goodbye utility method
  * @returns {null}
  */
+
 function printGoodbye() {
     console.log(`\tGoodbye.`);
 }
